@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.2.32505.173
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MatchMakers.Data", "MatchMakers.Data.csproj", "{4137CEB0-A773-41C9-AFF2-C14FBF2D307B}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{4137CEB0-A773-41C9-AFF2-C14FBF2D307B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4137CEB0-A773-41C9-AFF2-C14FBF2D307B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4137CEB0-A773-41C9-AFF2-C14FBF2D307B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4137CEB0-A773-41C9-AFF2-C14FBF2D307B}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {4D367892-661C-4910-8FB9-B2D11B2AD6C7}
+	EndGlobalSection
+EndGlobal

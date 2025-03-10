@@ -6,35 +6,35 @@ namespace ApiProject.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class MatchMakerController : ControllerBase
+    public class MatchMakingController : ControllerBase
     {
-        // GET: api/<matchmakerController>
+        // GET: api/<MatchMakingController>
         [HttpGet]
         public IEnumerable<string> Get()
         {
             return new string[] { "value1", "value2" };
         }
 
-        // GET api/<matchmakerController>/5
+        // GET api/<MatchMakingController>/5
         [HttpGet("{id}")]
         public string Get(int id)
         {
             return "value";
         }
 
-        // POST api/<matchmakerController>
+        // POST api/<MatchMakingController>
         [HttpPost]
         public void Post([FromBody] string value)
         {
         }
 
-        // PUT api/<matchmakerController>/5
+        // PUT api/<MatchMakingController>/5
         [HttpPut("{id}")]
         public void Put(int id, [FromBody] string value)
         {
         }
 
-        // DELETE api/<matchmakerController>/5
+        // DELETE api/<MatchMakingController>/5
         [HttpDelete("{id}")]
         public void Delete(int id)
         {

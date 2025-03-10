@@ -1,4 +1,4 @@
-namespace ApiProject
+namespace ApiMatchMaker
 {
     public class WeatherForecast
     {
