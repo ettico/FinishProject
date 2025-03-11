@@ -9,9 +9,9 @@ namespace MatchMakings.Service
 {
     public class MatchMakerRepository
     {
-        public List<MatchMaker> GetAll()
-        {
-            return new List<MatchMaker>();
-        }
+        //public List<MatchMaker> GetAll()
+        //{
+        //    return new DbSet<MatchMaker>().t;
+        //}
     }
 }

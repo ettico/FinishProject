@@ -11,9 +11,9 @@ namespace MatchMakings.Data.Repository
     public class MatchMakerRepository
     {
         private readonly DataContext _matchMaker;
-        public List<MatchMaker> GetAll()
-        {
-            return _matchMaker.MatchMakers;
-        }
+        //public List<MatchMaker> GetAll()
+        //{
+        //    return _matchMaker.MatchMakers;
+        //}
     }
 }

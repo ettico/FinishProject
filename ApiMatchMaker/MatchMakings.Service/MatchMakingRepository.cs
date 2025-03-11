@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace MatchMakings.Service
 {
-    internal class MatchMakingRepository
+    public class MatchMakingRepository
     {
+
     }
 }
