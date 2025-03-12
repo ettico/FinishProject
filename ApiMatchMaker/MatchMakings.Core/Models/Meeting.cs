@@ -15,6 +15,8 @@ namespace MatchMakings.Core.Models
         public int NumMeeting { get; set; }
         public DateTime MeetingDate { get; set; }
         public string MeetingPlace { get; set; }
-            
+        //קשר עם מחלקת שידוך
+        public int MatchMakingId { get; set; }
+        public MatchMaking MatchMaking { get; set; }
     }
 }

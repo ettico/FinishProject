@@ -15,6 +15,9 @@ namespace MatchMakings.Core.Models
         public int PersonId2 { get; set; }
         public DateTime ClosingDate { get; set; }
         public int NumMeetings { get; set; }
-        public DbSet<Meeting> Meetings { get; set; }
+        public List<Meeting> Meetings { get; set; }
+        public DateTime CreationDate { get; set; } // תאריך יצירת השידוך
+        public MatchMaker MatchMaker  { get; set; }
     }
+
 }
