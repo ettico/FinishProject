@@ -121,12 +121,12 @@ namespace MatchMakings.Data
 
             modelBuilder.Entity<Contact>()
                 .HasOne(c => c.Women)
-                .WithMany(w => w.Acquaintances)
+                .WithMany(w => w.Contacts)
                 .HasForeignKey(c => c.WomenId);
 
             modelBuilder.Entity<Contact>()
                 .HasOne(c => c.MatchMaker)
-                .WithMany(m => m.Recommend)
+                .WithMany(m => m.Contacts)
                 .HasForeignKey(c => c.MatchMakerId);
 
             modelBuilder.Entity<FamilyDetails>()

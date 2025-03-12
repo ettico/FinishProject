@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MatchMakings.Data.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20250312213245_Create-DB")]
+    [Migration("20250312230549_Create-DB")]
     partial class CreateDB
     {
         /// <inheritdoc />
@@ -33,21 +33,19 @@ namespace MatchMakings.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("MaleId")
+                    b.Property<int?>("MaleId")
                         .HasColumnType("int");
 
-                    b.Property<int>("MatchMakerId")
+                    b.Property<int?>("MatchMakerId")
                         .HasColumnType("int");
 
                     b.Property<string>("Name")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Phone")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("WomenId")
+                    b.Property<int?>("WomenId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -70,108 +68,95 @@ namespace MatchMakings.Data.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("EducationalInstitutions")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("ExpectedParticipants")
+                    b.Property<int?>("ExpectedParticipants")
                         .HasColumnType("int");
 
                     b.Property<string>("FamilyAbout")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("FamilyRabbi")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("FatherAffiliation")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("FatherName")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("FatherOccupation")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("FatherOrigin")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("FatherYeshiva")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("FinancialArrangement")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<bool>("HealthStatus")
+                    b.Property<bool?>("HealthStatus")
                         .HasColumnType("bit");
 
                     b.Property<string>("InLawNames")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<bool>("IsFlexible")
+                    b.Property<bool?>("IsFlexible")
                         .HasColumnType("bit");
 
-                    b.Property<int>("MaleId")
+                    b.Property<int?>("MaleId")
                         .HasColumnType("int");
 
-                    b.Property<int>("MatchmakingFee")
+                    b.Property<int?>("MatchmakingFee")
                         .HasColumnType("int");
 
                     b.Property<string>("MotherGraduateSeminar")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("MotherName")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("MotherOccupation")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("MotherOrigin")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("MotherPreviousName")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("NumberOfChildren")
+                    b.Property<int?>("NumberOfChildren")
                         .HasColumnType("int");
 
-                    b.Property<int>("NumberOfMarried")
+                    b.Property<int?>("NumberOfMarried")
                         .HasColumnType("int");
 
-                    b.Property<int>("NumberOfParticipants")
+                    b.Property<int?>("NumberOfParticipants")
                         .HasColumnType("int");
 
-                    b.Property<bool>("ParentsStatus")
+                    b.Property<bool?>("ParentsStatus")
                         .HasColumnType("bit");
 
-                    b.Property<int>("PositionInFamily")
+                    b.Property<int?>("PositionInFamily")
                         .HasColumnType("int");
 
-                    b.Property<bool>("SignedOrganization")
+                    b.Property<bool?>("SignedOrganization")
                         .HasColumnType("bit");
 
-                    b.Property<int>("WomenId")
+                    b.Property<int?>("WomenId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
                     b.HasIndex("MaleId")
-                        .IsUnique();
+                        .IsUnique()
+                        .HasFilter("[MaleId] IS NOT NULL");
 
                     b.HasIndex("WomenId")
-                        .IsUnique();
+                        .IsUnique()
+                        .HasFilter("[WomenId] IS NOT NULL");
 
                     b.ToTable("FamilyDetails");
                 });
@@ -185,169 +170,135 @@ namespace MatchMakings.Data.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Address")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("Age")
+                    b.Property<int?>("Age")
                         .HasColumnType("int");
 
-                    b.Property<int>("AgeFrom")
+                    b.Property<int?>("AgeFrom")
                         .HasColumnType("int");
 
-                    b.Property<int>("AgeTo")
+                    b.Property<int?>("AgeTo")
                         .HasColumnType("int");
 
-                    b.Property<bool>("AnOutsider")
+                    b.Property<bool?>("AnOutsider")
                         .HasColumnType("bit");
 
                     b.Property<string>("Appearance")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("BackGround")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Beard")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("BigYeshiva")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("BurnDate")
+                    b.Property<DateTime?>("BurnDate")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("City")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Class")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Club")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Country")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<bool>("DriversLicense")
+                    b.Property<bool?>("DriversLicense")
                         .HasColumnType("bit");
 
                     b.Property<string>("Email")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ExpectationsFromPartner")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("FacePaint")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("FatherPhone")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("FirstName")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Gender")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("GeneralAppearance")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("HeadCovering")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<bool>("HealthCondition")
+                    b.Property<bool?>("HealthCondition")
                         .HasColumnType("bit");
 
-                    b.Property<double>("Height")
+                    b.Property<double?>("Height")
                         .HasColumnType("float");
 
                     b.Property<string>("Hot")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ImportantTraitsIAmLookingFor")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ImportantTraitsInMe")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Kibbutz")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("LastName")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("MoreInformation")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("MotherPhone")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Occupation")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Openness")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("PairingType")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Phone")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("PreferredProfessionalPath")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("PreferredSeminarStyle")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("SmallYeshiva")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<bool>("Smoker")
+                    b.Property<bool?>("Smoker")
                         .HasColumnType("bit");
 
                     b.Property<string>("Status")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<bool>("StatusVacant")
+                    b.Property<bool?>("StatusVacant")
                         .HasColumnType("bit");
 
                     b.Property<string>("Suit")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Tz")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
@@ -364,90 +315,72 @@ namespace MatchMakings.Data.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Address")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("BirthDate")
+                    b.Property<DateTime?>("BirthDate")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("City")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Community")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Email")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ExperienceInShidduchim")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("FirstName")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Gender")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<bool>("HasChildrenInShidduchim")
+                    b.Property<bool?>("HasChildrenInShidduchim")
                         .HasColumnType("bit");
 
                     b.Property<string>("IdNumber")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<bool>("IsInternalMatchmaker")
+                    b.Property<bool?>("IsInternalMatchmaker")
                         .HasColumnType("bit");
 
-                    b.Property<bool>("IsSeminarGraduate")
+                    b.Property<bool?>("IsSeminarGraduate")
                         .HasColumnType("bit");
 
                     b.Property<string>("LandlinePhone")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("LastName")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("LifeSkills")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("MatchmakerName")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("MobilePhone")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Occupation")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("PersonalClub")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("PhoneType")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("PreviousWorkplaces")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("PrintingNotes")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("YearsInShidduchim")
+                    b.Property<int?>("YearsInShidduchim")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -463,27 +396,35 @@ namespace MatchMakings.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<DateTime>("ClosingDate")
+                    b.Property<DateTime?>("ClosingDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime>("CreationDate")
+                    b.Property<DateTime?>("CreationDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("MatchMakerId")
+                    b.Property<int?>("MaleId")
                         .HasColumnType("int");
 
-                    b.Property<int>("NumMeetings")
+                    b.Property<int?>("MatchMakerId")
                         .HasColumnType("int");
 
-                    b.Property<int>("PersonId1")
+                    b.Property<int?>("NumMeetings")
                         .HasColumnType("int");
 
-                    b.Property<int>("PersonId2")
+                    b.Property<int?>("WomenId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
+                    b.HasIndex("MaleId")
+                        .IsUnique()
+                        .HasFilter("[MaleId] IS NOT NULL");
+
                     b.HasIndex("MatchMakerId");
+
+                    b.HasIndex("WomenId")
+                        .IsUnique()
+                        .HasFilter("[WomenId] IS NOT NULL");
 
                     b.ToTable("MatchMakings");
                 });
@@ -496,26 +437,16 @@ namespace MatchMakings.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("MatchMakerId")
+                    b.Property<int?>("MatchMakingId")
                         .HasColumnType("int");
 
-                    b.Property<int>("MatchMakingId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("MeetingDate")
+                    b.Property<DateTime?>("MeetingDate")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("MeetingPlace")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("NumMeeting")
-                        .HasColumnType("int");
-
-                    b.Property<int>("PersonId1")
-                        .HasColumnType("int");
-
-                    b.Property<int>("PersonId2")
+                    b.Property<int?>("NumMeeting")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -534,174 +465,138 @@ namespace MatchMakings.Data.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("AdditionalEducationalInstitution")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Address")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("Age")
+                    b.Property<int?>("Age")
                         .HasColumnType("int");
 
-                    b.Property<int>("AgeFrom")
+                    b.Property<int?>("AgeFrom")
                         .HasColumnType("int");
 
-                    b.Property<int>("AgeTo")
+                    b.Property<int?>("AgeTo")
                         .HasColumnType("int");
 
-                    b.Property<bool>("AnOutsider")
+                    b.Property<bool?>("AnOutsider")
                         .HasColumnType("bit");
 
                     b.Property<string>("Appearance")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("BackGround")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Beard")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("BurnDate")
+                    b.Property<DateTime?>("BurnDate")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("City")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Class")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Club")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Country")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("CurrentOccupation")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("DrivingLicense")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Email")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("FacePaint")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("FatherPhone")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("FirstName")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Gender")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("GeneralAppearance")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Hat")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("HeadCovering")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<bool>("HealthCondition")
+                    b.Property<bool?>("HealthCondition")
                         .HasColumnType("bit");
 
-                    b.Property<double>("Height")
+                    b.Property<double?>("Height")
                         .HasColumnType("float");
 
                     b.Property<string>("HighSchool")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ImportantTraitsIMLookingFor")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ImportantTraitsInMe")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("InterestedInBoy")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("LastName")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("MoreInformation")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("MotherPhone")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Occupation")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Openness")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("PairingType")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Phone")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("PreferredSittingStyle")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Seminar")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<bool>("Smoker")
+                    b.Property<bool?>("Smoker")
                         .HasColumnType("bit");
 
                     b.Property<string>("Status")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<bool>("StatusVacant")
+                    b.Property<bool?>("StatusVacant")
                         .HasColumnType("bit");
 
                     b.Property<string>("StudyPath")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Suit")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Tz")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
@@ -713,21 +608,15 @@ namespace MatchMakings.Data.Migrations
                 {
                     b.HasOne("MatchMakings.Core.Models.Male", "Male")
                         .WithMany("Acquaintances")
-                        .HasForeignKey("MaleId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("MaleId");
 
                     b.HasOne("MatchMakings.Core.Models.MatchMaker", "MatchMaker")
                         .WithMany("Recommend")
-                        .HasForeignKey("MatchMakerId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("MatchMakerId");
 
                     b.HasOne("MatchMakings.Core.Models.Women", "Women")
                         .WithMany("Acquaintances")
-                        .HasForeignKey("WomenId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("WomenId");
 
                     b.Navigation("Male");
 
@@ -740,15 +629,11 @@ namespace MatchMakings.Data.Migrations
                 {
                     b.HasOne("MatchMakings.Core.Models.Male", "Male")
                         .WithOne("FamilyDetails")
-                        .HasForeignKey("MatchMakings.Core.Models.FamilyDetails", "MaleId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("MatchMakings.Core.Models.FamilyDetails", "MaleId");
 
                     b.HasOne("MatchMakings.Core.Models.Women", "Women")
                         .WithOne("FamilyDetails")
-                        .HasForeignKey("MatchMakings.Core.Models.FamilyDetails", "WomenId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("MatchMakings.Core.Models.FamilyDetails", "WomenId");
 
                     b.Navigation("Male");
 
@@ -757,22 +642,30 @@ namespace MatchMakings.Data.Migrations
 
             modelBuilder.Entity("MatchMakings.Core.Models.MatchMaking", b =>
                 {
+                    b.HasOne("MatchMakings.Core.Models.Male", "male")
+                        .WithOne("matchMaking")
+                        .HasForeignKey("MatchMakings.Core.Models.MatchMaking", "MaleId");
+
                     b.HasOne("MatchMakings.Core.Models.MatchMaker", "MatchMaker")
                         .WithMany("Matches")
-                        .HasForeignKey("MatchMakerId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("MatchMakerId");
+
+                    b.HasOne("MatchMakings.Core.Models.Women", "women")
+                        .WithOne("matchMaking")
+                        .HasForeignKey("MatchMakings.Core.Models.MatchMaking", "WomenId");
 
                     b.Navigation("MatchMaker");
+
+                    b.Navigation("male");
+
+                    b.Navigation("women");
                 });
 
             modelBuilder.Entity("MatchMakings.Core.Models.Meeting", b =>
                 {
                     b.HasOne("MatchMakings.Core.Models.MatchMaking", "MatchMaking")
                         .WithMany("Meetings")
-                        .HasForeignKey("MatchMakingId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("MatchMakingId");
 
                     b.Navigation("MatchMaking");
                 });
@@ -781,8 +674,9 @@ namespace MatchMakings.Data.Migrations
                 {
                     b.Navigation("Acquaintances");
 
-                    b.Navigation("FamilyDetails")
-                        .IsRequired();
+                    b.Navigation("FamilyDetails");
+
+                    b.Navigation("matchMaking");
                 });
 
             modelBuilder.Entity("MatchMakings.Core.Models.MatchMaker", b =>
@@ -801,8 +695,9 @@ namespace MatchMakings.Data.Migrations
                 {
                     b.Navigation("Acquaintances");
 
-                    b.Navigation("FamilyDetails")
-                        .IsRequired();
+                    b.Navigation("FamilyDetails");
+
+                    b.Navigation("matchMaking");
                 });
 #pragma warning restore 612, 618
         }
