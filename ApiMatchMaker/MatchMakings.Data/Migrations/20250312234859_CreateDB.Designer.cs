@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MatchMakings.Data.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20250312230549_Create-DB")]
+    [Migration("20250312234859_CreateDB")]
     partial class CreateDB
     {
         /// <inheritdoc />
@@ -405,6 +405,9 @@ namespace MatchMakings.Data.Migrations
                     b.Property<int?>("MaleId")
                         .HasColumnType("int");
 
+                    b.Property<int?>("MaleId1")
+                        .HasColumnType("int");
+
                     b.Property<int?>("MatchMakerId")
                         .HasColumnType("int");
 
@@ -414,17 +417,24 @@ namespace MatchMakings.Data.Migrations
                     b.Property<int?>("WomenId")
                         .HasColumnType("int");
 
+                    b.Property<int?>("WomenId1")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
-                    b.HasIndex("MaleId")
+                    b.HasIndex("MaleId");
+
+                    b.HasIndex("MaleId1")
                         .IsUnique()
-                        .HasFilter("[MaleId] IS NOT NULL");
+                        .HasFilter("[MaleId1] IS NOT NULL");
 
                     b.HasIndex("MatchMakerId");
 
-                    b.HasIndex("WomenId")
+                    b.HasIndex("WomenId");
+
+                    b.HasIndex("WomenId1")
                         .IsUnique()
-                        .HasFilter("[WomenId] IS NOT NULL");
+                        .HasFilter("[WomenId1] IS NOT NULL");
 
                     b.ToTable("MatchMakings");
                 });
@@ -611,11 +621,11 @@ namespace MatchMakings.Data.Migrations
                         .HasForeignKey("MaleId");
 
                     b.HasOne("MatchMakings.Core.Models.MatchMaker", "MatchMaker")
-                        .WithMany("Recommend")
+                        .WithMany("Contacts")
                         .HasForeignKey("MatchMakerId");
 
                     b.HasOne("MatchMakings.Core.Models.Women", "Women")
-                        .WithMany("Acquaintances")
+                        .WithMany("Contacts")
                         .HasForeignKey("WomenId");
 
                     b.Navigation("Male");
@@ -643,16 +653,24 @@ namespace MatchMakings.Data.Migrations
             modelBuilder.Entity("MatchMakings.Core.Models.MatchMaking", b =>
                 {
                     b.HasOne("MatchMakings.Core.Models.Male", "male")
+                        .WithMany()
+                        .HasForeignKey("MaleId");
+
+                    b.HasOne("MatchMakings.Core.Models.Male", null)
                         .WithOne("matchMaking")
-                        .HasForeignKey("MatchMakings.Core.Models.MatchMaking", "MaleId");
+                        .HasForeignKey("MatchMakings.Core.Models.MatchMaking", "MaleId1");
 
                     b.HasOne("MatchMakings.Core.Models.MatchMaker", "MatchMaker")
                         .WithMany("Matches")
                         .HasForeignKey("MatchMakerId");
 
                     b.HasOne("MatchMakings.Core.Models.Women", "women")
+                        .WithMany()
+                        .HasForeignKey("WomenId");
+
+                    b.HasOne("MatchMakings.Core.Models.Women", null)
                         .WithOne("matchMaking")
-                        .HasForeignKey("MatchMakings.Core.Models.MatchMaking", "WomenId");
+                        .HasForeignKey("MatchMakings.Core.Models.MatchMaking", "WomenId1");
 
                     b.Navigation("MatchMaker");
 
@@ -681,9 +699,9 @@ namespace MatchMakings.Data.Migrations
 
             modelBuilder.Entity("MatchMakings.Core.Models.MatchMaker", b =>
                 {
-                    b.Navigation("Matches");
+                    b.Navigation("Contacts");
 
-                    b.Navigation("Recommend");
+                    b.Navigation("Matches");
                 });
 
             modelBuilder.Entity("MatchMakings.Core.Models.MatchMaking", b =>
@@ -693,7 +711,7 @@ namespace MatchMakings.Data.Migrations
 
             modelBuilder.Entity("MatchMakings.Core.Models.Women", b =>
                 {
-                    b.Navigation("Acquaintances");
+                    b.Navigation("Contacts");
 
                     b.Navigation("FamilyDetails");
 
