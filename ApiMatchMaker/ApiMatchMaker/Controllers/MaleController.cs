@@ -6,7 +6,7 @@ namespace ApiProject.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class PersonController : ControllerBase
+    public class MaleController : ControllerBase
     {
         // GET: api/<PersonController>
         [HttpGet]

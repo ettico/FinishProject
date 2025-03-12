@@ -101,9 +101,8 @@ namespace MatchMakings.Data
     //}
     public class DataContext : DbContext
     {
-        public DbSet<Person> People { get; set; }
         public DbSet<Male> Males { get; set; }
-        public DbSet<Women> Females { get; set; }
+        public DbSet<Women> Womens { get; set; }
         public DbSet<Contact> Contacts { get; set; }
         public DbSet<FamilyDetails> FamilyDetails { get; set; }
         public DbSet<MatchMaker> MatchMakers { get; set; }
@@ -111,63 +110,45 @@ namespace MatchMakings.Data
         public DbSet<Meeting> Meetings { get; set; }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer(@"Server=(localdb)\MSSQLLocalDB;Database=MatchMakings_DB");
+            optionsBuilder.UseSqlServer("Server=(localdb)\\MSSQLLocalDB;Database=MatchMakingsToDB");
         }
-        //protected override void OnModelCreating(ModelBuilder modelBuilder)
-        //{
-        //    // קשרים בין Contact ל-Person
-        //    modelBuilder.Entity<Contact>()
-        //        .HasOne(c => c.Person1)
-        //        .WithMany(p => p.Friends) // קשר עם חברים
-        //        .HasForeignKey(c => c.PersonId1)
-        //        .OnDelete(DeleteBehavior.Cascade);
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Contact>()
+                .HasOne(c => c.Male)
+                .WithMany(m => m.Acquaintances)
+                .HasForeignKey(c => c.MaleId);
 
-        //    modelBuilder.Entity<Contact>()
-        //        .HasOne(c => c.Person2)
-        //        .WithMany(p => p.Staff) // קשר עם צוות
-        //        .HasForeignKey(c => c.PersonId2)
-        //        .OnDelete(DeleteBehavior.Cascade);
+            modelBuilder.Entity<Contact>()
+                .HasOne(c => c.Women)
+                .WithMany(w => w.Acquaintances)
+                .HasForeignKey(c => c.WomenId);
 
-        //    // קשרים בין FamilyDetails ל-Person
-        //    modelBuilder.Entity<FamilyDetails>()
-        //        .HasOne<Person>()
-        //        .WithOne(fd => fd.familyDetails) // קשר עם פרטי משפחה
-        //        .HasForeignKey<FamilyDetails>(fd => fd.PersonId);
+            modelBuilder.Entity<Contact>()
+                .HasOne(c => c.MatchMaker)
+                .WithMany(m => m.Recommend)
+                .HasForeignKey(c => c.MatchMakerId);
 
-        //    // קשרים בין Male ו-Female ל-FamilyDetails
-        //    modelBuilder.Entity<Male>()
-        //        .HasOne(fd => fd.FamilyDetails)
-        //        .WithMany()
-        //        .HasForeignKey(m => m.FamilyDetailsId);
+            modelBuilder.Entity<FamilyDetails>()
+                .HasOne(fd => fd.Male)
+                .WithOne(m => m.FamilyDetails)
+                .HasForeignKey<FamilyDetails>(fd => fd.MaleId);
 
-        //    modelBuilder.Entity<Women>()
-        //        .HasOne(fd => fd.FamilyDetails)
-        //        .WithMany()
-        //        .HasForeignKey(w => w.FamilyDetailsId);
+            modelBuilder.Entity<FamilyDetails>()
+                .HasOne(fd => fd.Women)
+                .WithOne(w => w.FamilyDetails)
+                .HasForeignKey<FamilyDetails>(fd => fd.WomenId);
 
-        //    // קשרים בין MatchMaker ל-MatchMaking
-        //    modelBuilder.Entity<MatchMaker>()
-        //        .HasMany(mm => mm.Matches)
-        //        .WithOne()
-        //        .HasForeignKey(m => m.MatchMakerId);
+            modelBuilder.Entity<MatchMaking>()
+                .HasOne(mm => mm.MatchMaker)
+                .WithMany(m => m.Matches)
+                .HasForeignKey(mm => mm.MatchMakerId);
 
-        //    // קשרים בין MatchMaking ל-Meeting
-        //    modelBuilder.Entity<MatchMaking>()
-        //        .HasMany(mm => mm.Meetings)
-        //        .WithOne()
-        //        .HasForeignKey(m => m.MatchMakerId); // או PersonId1/PersonId2 לפי הצורך
-
-        //    // קשרים בין Meeting ל-Person
-        //    modelBuilder.Entity<Meeting>()
-        //        .HasOne<Person>()
-        //        .WithMany()
-        //        .HasForeignKey(m => m.PersonId1);
-
-        //    modelBuilder.Entity<Meeting>()
-        //        .HasOne<Person>()
-        //        .WithMany()
-        //        .HasForeignKey(m => m.PersonId2);
-        //}
+            modelBuilder.Entity<Meeting>()
+                .HasOne(m => m.MatchMaking)
+                .WithMany(mm => mm.Meetings)
+                .HasForeignKey(m => m.MatchMakingId);
+        }
 
 
     }

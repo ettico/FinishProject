@@ -46,7 +46,10 @@ namespace MatchMakings.Core.Models
         public bool SignedOrganization { get; set; } // חתומים על ארגון שהשמחה במעונו
         public int MatchmakingFee { get; set; } // דמי שדכנות
       
-        public Person Person { get; set; }
-        public int PersonId { get; set; } // מפתח זר לקשר עם אדם
+        public Male Male { get; set; }
+        public int MaleId { get; set; } // מפתח זר לקשר עם אדם
+
+        public Women Women { get; set; }
+        public int WomenId { get; set; } // מפתח זר לקשר עם אדם
     }
 }

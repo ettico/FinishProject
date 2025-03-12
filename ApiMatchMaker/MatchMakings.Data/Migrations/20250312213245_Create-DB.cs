@@ -12,6 +12,62 @@ namespace MatchMakings.Data.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
+                name: "Males",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    FirstName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    LastName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Country = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    City = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Address = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Tz = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Class = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    AnOutsider = table.Column<bool>(type: "bit", nullable: false),
+                    BackGround = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Openness = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Gender = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    BurnDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Age = table.Column<int>(type: "int", nullable: false),
+                    HealthCondition = table.Column<bool>(type: "bit", nullable: false),
+                    Status = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    StatusVacant = table.Column<bool>(type: "bit", nullable: false),
+                    PairingType = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Height = table.Column<double>(type: "float", nullable: false),
+                    GeneralAppearance = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    FacePaint = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Appearance = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Phone = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    FatherPhone = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    MotherPhone = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    MoreInformation = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    DriversLicense = table.Column<bool>(type: "bit", nullable: false),
+                    Smoker = table.Column<bool>(type: "bit", nullable: false),
+                    Beard = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Hot = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Suit = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    SmallYeshiva = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    BigYeshiva = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Kibbutz = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Occupation = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ExpectationsFromPartner = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Club = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    AgeFrom = table.Column<int>(type: "int", nullable: false),
+                    AgeTo = table.Column<int>(type: "int", nullable: false),
+                    ImportantTraitsInMe = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ImportantTraitsIAmLookingFor = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    PreferredSeminarStyle = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    PreferredProfessionalPath = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    HeadCovering = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Males", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "MatchMakers",
                 columns: table => new
                 {
@@ -47,7 +103,7 @@ namespace MatchMakings.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "People",
+                name: "Womens",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -78,48 +134,29 @@ namespace MatchMakings.Data.Migrations
                     FatherPhone = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     MotherPhone = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     MoreInformation = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Discriminator = table.Column<string>(type: "nvarchar(8)", maxLength: 8, nullable: false),
-                    DriversLicense = table.Column<bool>(type: "bit", nullable: true),
-                    Smoker = table.Column<bool>(type: "bit", nullable: true),
-                    Beard = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Hot = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Suit = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    SmallYeshiva = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    BigYeshiva = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Kibbutz = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Occupation = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    ExpectationsFromPartner = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Club = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    AgeFrom = table.Column<int>(type: "int", nullable: true),
-                    AgeTo = table.Column<int>(type: "int", nullable: true),
-                    ImportantTraitsInMe = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    ImportantTraitsIAmLookingFor = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    PreferredSeminarStyle = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    PreferredProfessionalPath = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    HeadCovering = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Women_HeadCovering = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    HighSchool = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Seminar = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    StudyPath = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    AdditionalEducationalInstitution = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    CurrentOccupation = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Women_Club = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Women_AgeFrom = table.Column<int>(type: "int", nullable: true),
-                    Women_AgeTo = table.Column<int>(type: "int", nullable: true),
-                    Women_ImportantTraitsInMe = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    ImportantTraitsIMLookingFor = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    PreferredSittingStyle = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    InterestedInBoy = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    DrivingLicense = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Women_Smoker = table.Column<bool>(type: "bit", nullable: true),
-                    Women_Beard = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Hat = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Women_Suit = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Women_Occupation = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    HeadCovering = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    HighSchool = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Seminar = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    StudyPath = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    AdditionalEducationalInstitution = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CurrentOccupation = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Club = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    AgeFrom = table.Column<int>(type: "int", nullable: false),
+                    AgeTo = table.Column<int>(type: "int", nullable: false),
+                    ImportantTraitsInMe = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ImportantTraitsIMLookingFor = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    PreferredSittingStyle = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    InterestedInBoy = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    DrivingLicense = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Smoker = table.Column<bool>(type: "bit", nullable: false),
+                    Beard = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Hat = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Suit = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Occupation = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_People", x => x.Id);
+                    table.PrimaryKey("PK_Womens", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -154,12 +191,19 @@ namespace MatchMakings.Data.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Phone = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    PersonId = table.Column<int>(type: "int", nullable: false),
+                    MaleId = table.Column<int>(type: "int", nullable: false),
+                    WomenId = table.Column<int>(type: "int", nullable: false),
                     MatchMakerId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Contacts", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Contacts_Males_MaleId",
+                        column: x => x.MaleId,
+                        principalTable: "Males",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Contacts_MatchMakers_MatchMakerId",
                         column: x => x.MatchMakerId,
@@ -167,9 +211,9 @@ namespace MatchMakings.Data.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Contacts_People_PersonId",
-                        column: x => x.PersonId,
-                        principalTable: "People",
+                        name: "FK_Contacts_Womens_WomenId",
+                        column: x => x.WomenId,
+                        principalTable: "Womens",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -205,15 +249,22 @@ namespace MatchMakings.Data.Migrations
                     IsFlexible = table.Column<bool>(type: "bit", nullable: false),
                     SignedOrganization = table.Column<bool>(type: "bit", nullable: false),
                     MatchmakingFee = table.Column<int>(type: "int", nullable: false),
-                    PersonId = table.Column<int>(type: "int", nullable: false)
+                    MaleId = table.Column<int>(type: "int", nullable: false),
+                    WomenId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_FamilyDetails", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_FamilyDetails_People_PersonId",
-                        column: x => x.PersonId,
-                        principalTable: "People",
+                        name: "FK_FamilyDetails_Males_MaleId",
+                        column: x => x.MaleId,
+                        principalTable: "Males",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_FamilyDetails_Womens_WomenId",
+                        column: x => x.WomenId,
+                        principalTable: "Womens",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -244,19 +295,30 @@ namespace MatchMakings.Data.Migrations
                 });
 
             migrationBuilder.CreateIndex(
+                name: "IX_Contacts_MaleId",
+                table: "Contacts",
+                column: "MaleId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Contacts_MatchMakerId",
                 table: "Contacts",
                 column: "MatchMakerId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Contacts_PersonId",
+                name: "IX_Contacts_WomenId",
                 table: "Contacts",
-                column: "PersonId");
+                column: "WomenId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_FamilyDetails_PersonId",
+                name: "IX_FamilyDetails_MaleId",
                 table: "FamilyDetails",
-                column: "PersonId",
+                column: "MaleId",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_FamilyDetails_WomenId",
+                table: "FamilyDetails",
+                column: "WomenId",
                 unique: true);
 
             migrationBuilder.CreateIndex(
@@ -283,7 +345,10 @@ namespace MatchMakings.Data.Migrations
                 name: "Meetings");
 
             migrationBuilder.DropTable(
-                name: "People");
+                name: "Males");
+
+            migrationBuilder.DropTable(
+                name: "Womens");
 
             migrationBuilder.DropTable(
                 name: "MatchMakings");
