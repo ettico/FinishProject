@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace MatchMakings.Service
 {
-    class MaleService : IMaleService
+    public class MaleService : IMaleService
     {
         readonly private IMaleRepository _MaleRepository;
 

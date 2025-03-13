@@ -1,4 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using MatchMakings.Core.IServices;
+using MatchMakings.Core.Models;
+using MatchMakings.Service;
+using Microsoft.AspNetCore.Mvc;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -8,36 +11,53 @@ namespace ApiMatchMaker.Controllers
     [ApiController]
     public class FamilyDetailsController : ControllerBase
     {
-        // GET: api/<FamilyDetailsController>
+        private readonly IFamilyDetailsService _familyDetailsService;
+        //private readonly IMapper _mapper;
+        public FamilyDetailsController(IFamilyDetailsService familyDetailsService)/*, IMapper mapper*/
+        {
+            _familyDetailsService = familyDetailsService;
+            //_mapper = mapper;
+        }
+        // GET: api/<CustomerController>
         [HttpGet]
-        public IEnumerable<string> Get()
+        public async Task<ActionResult> Get()
         {
-            return new string[] { "value1", "value2" };
+            var list = await _familyDetailsService.GetListOfFamilyDetailsAsync();
+            //var custDTO = _mapper.Map<IEnumerable<CustomerDTO>>(list);
+            return Ok(list);
         }
 
-        // GET api/<FamilyDetailsController>/5
+        // GET api/<CustomerController>/5
         [HttpGet("{id}")]
-        public string Get(int id)
+        public async Task<ActionResult<FamilyDetails>> Get(int id)
         {
-            return "value";
+            var fm = await _familyDetailsService.GetFamilyDetailsByIdAsync(id);
+            //var custDTO = _mapper.Map<CustomerDTO>(cust);
+            return Ok(fm);
         }
 
-        // POST api/<FamilyDetailsController>
+        //POST api/<CustomerController>
         [HttpPost]
-        public void Post([FromBody]string value)
+        public async Task<ActionResult<FamilyDetails>> Post([FromBody] FamilyDetails f)
         {
+            //var customer = new Contact { castName = c.castName, castAddress = c.castAddress, castPhone = c.castPhone, castEmail = c.castEmail, VolunteerId = c.VolunteerId };
+            return await _familyDetailsService.AddFamilyDetailsAsync(f);
         }
 
-        // PUT api/<FamilyDetailsController>/5
+        //PUT api/<CustomerController>/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody]string value)
+        public async Task<ActionResult<FamilyDetails>> Put(int id, [FromBody] FamilyDetails f)
         {
+            //var customer = new Customer { castName = c.castName, castAddress = c.castAddress, castPhone = c.castPhone, castEmail = c.castEmail, VolunteerId = c.VolunteerId };
+
+            return await _familyDetailsService.UpdateFamilyDetailsAsync(id, f);
         }
 
-        // DELETE api/<FamilyDetailsController>/5
+        // DELETE api/<CustomerController>/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public async Task<ActionResult<FamilyDetails>> Delete(int id)
         {
+            return await _familyDetailsService.DeleteFamilyDetailsAsync(id);
         }
     }
 }

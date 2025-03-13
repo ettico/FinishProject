@@ -10,7 +10,7 @@ using static System.Net.Mime.MediaTypeNames;
 
 namespace MatchMakings.Service
 {
-    class ContactService : IContactService
+    public class ContactService : IContactService
     {
         readonly private IContactRepository _ContactRepository;
 

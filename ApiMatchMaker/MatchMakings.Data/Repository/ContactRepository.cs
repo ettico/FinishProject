@@ -10,7 +10,7 @@ using static System.Net.Mime.MediaTypeNames;
 
 namespace MatchMakings.Data.Repository
 {
-    class ContactRepository : IContactRepository
+     public class ContactRepository : IContactRepository
     {
         private readonly DataContext _dataContext;
 
@@ -20,7 +20,7 @@ namespace MatchMakings.Data.Repository
         }
         public async Task<IEnumerable<Contact>> GetListOfContactAsync()
         {
-            return await _dataContext.Contacts.Include(u => u.WomenId).ToListAsync();//todo
+            return await _dataContext.Contacts.Include(u => u.MatchMaker).ToListAsync();//todo
         }
 
         public async Task<Contact> GetContactByIdAsync(int id)

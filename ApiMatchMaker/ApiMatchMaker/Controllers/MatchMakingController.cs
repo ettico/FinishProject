@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using MatchMakings.Core.IServices;
+using MatchMakings.Core.Models;
+using Microsoft.AspNetCore.Mvc;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -8,36 +10,53 @@ namespace ApiProject.Controllers
     [ApiController]
     public class MatchMakingController : ControllerBase
     {
-        // GET: api/<MatchMakingController>
+        private readonly IMatchMakingService _matchMakingService;
+        //private readonly IMapper _mapper;
+        public MatchMakingController(IMatchMakingService matchMakingService)/*, IMapper mapper*/
+        {
+            _matchMakingService = matchMakingService;
+            //_mapper = mapper;
+        }
+        // GET: api/<CustomerController>
         [HttpGet]
-        public IEnumerable<string> Get()
+        public async Task<ActionResult> Get()
         {
-            return new string[] { "value1", "value2" };
+            var list = await _matchMakingService.GetListOfMatchMakingAsync();
+            //var custDTO = _mapper.Map<IEnumerable<CustomerDTO>>(list);
+            return Ok(list);
         }
 
-        // GET api/<MatchMakingController>/5
+        // GET api/<CustomerController>/5
         [HttpGet("{id}")]
-        public string Get(int id)
+        public async Task<ActionResult<MatchMaking>> Get(int id)
         {
-            return "value";
+            var mm = await _matchMakingService.GetMatchMakingByIdAsync(id);
+            //var custDTO = _mapper.Map<CustomerDTO>(cust);
+            return Ok(mm);
         }
 
-        // POST api/<MatchMakingController>
+        //POST api/<CustomerController>
         [HttpPost]
-        public void Post([FromBody] string value)
+        public async Task<ActionResult<MatchMaking>> Post([FromBody] MatchMaking m)
         {
+            //var customer = new Contact { castName = c.castName, castAddress = c.castAddress, castPhone = c.castPhone, castEmail = c.castEmail, VolunteerId = c.VolunteerId };
+            return await _matchMakingService.AddMatchMakingAsync(m);
         }
 
-        // PUT api/<MatchMakingController>/5
+        //PUT api/<CustomerController>/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        public async Task<ActionResult<MatchMaking>> Put(int id, [FromBody] MatchMaking m)
         {
+            //var customer = new Customer { castName = c.castName, castAddress = c.castAddress, castPhone = c.castPhone, castEmail = c.castEmail, VolunteerId = c.VolunteerId };
+
+            return await _matchMakingService.UpdateMatchMakingAsync(id, m);
         }
 
-        // DELETE api/<MatchMakingController>/5
+        // DELETE api/<CustomerController>/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public async Task<ActionResult<MatchMaking>> Delete(int id)
         {
+            return await _matchMakingService.DeleteMatchMakingAsync(id);
         }
     }
 }

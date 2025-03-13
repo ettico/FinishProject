@@ -1,4 +1,8 @@
+using MatchMakings.Core.IRepositories;
+using MatchMakings.Core.IServices;
 using MatchMakings.Data;
+using MatchMakings.Data.Repository;
+using MatchMakings.Service;
 using Microsoft.Extensions.DependencyInjection;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -9,6 +13,10 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+
+builder.Services.AddScoped<IContactRepository, ContactRepository>();
+builder.Services.AddScoped<IContactService, ContactService>();
 
 builder.Services.AddDbContext<DataContext>();
 

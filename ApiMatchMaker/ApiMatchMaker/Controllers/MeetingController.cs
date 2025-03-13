@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using MatchMakings.Core.IServices;
+using MatchMakings.Core.Models;
+using Microsoft.AspNetCore.Mvc;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -8,36 +10,53 @@ namespace ApiProject.Controllers
     [ApiController]
     public class MeetingController : ControllerBase
     {
-        // GET: api/<MeetingController>
+        private readonly IMeetingService _meetingService;
+        //private readonly IMapper _mapper;
+        public MeetingController(IMeetingService meetingService)/*, IMapper mapper*/
+        {
+            _meetingService = meetingService;
+            //_mapper = mapper;
+        }
+        // GET: api/<CustomerController>
         [HttpGet]
-        public IEnumerable<string> Get()
+        public async Task<ActionResult> Get()
         {
-            return new string[] { "value1", "value2" };
+            var list = await _meetingService.GetListOfMeetingAsync();
+            //var custDTO = _mapper.Map<IEnumerable<CustomerDTO>>(list);
+            return Ok(list);
         }
 
-        // GET api/<MeetingController>/5
+        // GET api/<CustomerController>/5
         [HttpGet("{id}")]
-        public string Get(int id)
+        public async Task<ActionResult<Meeting>> Get(int id)
         {
-            return "value";
+            var meeting = await _meetingService.GetMeetingByIdAsync(id);
+            //var custDTO = _mapper.Map<CustomerDTO>(cust);
+            return Ok(meeting);
         }
 
-        // POST api/<MeetingController>
+        //POST api/<CustomerController>
         [HttpPost]
-        public void Post([FromBody] string value)
+        public async Task<ActionResult<Meeting>> Post([FromBody] Meeting m)
         {
+            //var customer = new Contact { castName = c.castName, castAddress = c.castAddress, castPhone = c.castPhone, castEmail = c.castEmail, VolunteerId = c.VolunteerId };
+            return await _meetingService.AddMeetingAsync(m);
         }
 
-        // PUT api/<MeetingController>/5
+        //PUT api/<CustomerController>/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        public async Task<ActionResult<Meeting>> Put(int id, [FromBody] Meeting m)
         {
+            //var customer = new Customer { castName = c.castName, castAddress = c.castAddress, castPhone = c.castPhone, castEmail = c.castEmail, VolunteerId = c.VolunteerId };
+
+            return await _meetingService.UpdateMeetingAsync(id, m);
         }
 
-        // DELETE api/<MeetingController>/5
+        // DELETE api/<CustomerController>/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public async Task<ActionResult<Meeting>> Delete(int id)
         {
+            return await _meetingService.DeleteMeetingAsync(id);
         }
     }
 }

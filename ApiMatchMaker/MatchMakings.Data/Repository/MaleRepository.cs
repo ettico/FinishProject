@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace MatchMakings.Data.Repository
 {
-    class MaleRepository: IMaleRepository
+    public class MaleRepository: IMaleRepository
     {
         private readonly DataContext _dataContext;
 

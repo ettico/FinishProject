@@ -115,9 +115,9 @@ namespace MatchMakings.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Contact>()
-    .HasOne(c => c.Male)
-    .WithMany(m => m.Acquaintances)
-    .HasForeignKey(c => c.MaleId);
+               .HasOne(c => c.Male)
+               .WithMany(m => m.Acquaintances)
+               .HasForeignKey(c => c.MaleId);
 
             modelBuilder.Entity<Contact>()
                 .HasOne(c => c.Women)
@@ -130,9 +130,9 @@ namespace MatchMakings.Data
                 .HasForeignKey(c => c.MatchMakerId);
 
             modelBuilder.Entity<FamilyDetails>()
-           .HasOne(fd => fd.Male)
-    .WithOne(m => m.FamilyDetails)
-    .HasForeignKey<FamilyDetails>(fd => fd.MaleId);
+             .HasOne(fd => fd.Male)
+             .WithOne(m => m.FamilyDetails)
+             .HasForeignKey<FamilyDetails>(fd => fd.MaleId);
 
             modelBuilder.Entity<FamilyDetails>()
                 .HasOne(fd => fd.Women)
@@ -140,9 +140,9 @@ namespace MatchMakings.Data
                 .HasForeignKey<FamilyDetails>(fd => fd.WomenId);
 
             modelBuilder.Entity<MatchMaking>()
-    .HasOne(mm => mm.male) // קשר עם Male
-    .WithMany() // קשר אחד לרבים
-    .HasForeignKey(mm => mm.MaleId);
+            .HasOne(mm => mm.male) // קשר עם Male
+            .WithMany() // קשר אחד לרבים
+            .HasForeignKey(mm => mm.MaleId);
 
             modelBuilder.Entity<MatchMaking>()
                 .HasOne(mm => mm.women) // קשר עם Women
@@ -155,16 +155,16 @@ namespace MatchMakings.Data
                 .HasForeignKey(mm => mm.MatchMakerId);
 
             modelBuilder.Entity<Meeting>()
-    .HasOne(m => m.MatchMaking)
-    .WithMany(mm => mm.Meetings)
-    .HasForeignKey(m => m.MatchMakingId);
+            .HasOne(m => m.MatchMaking)
+            .WithMany(mm => mm.Meetings)
+            .HasForeignKey(m => m.MatchMakingId);
 
-            modelBuilder.Entity<MatchMaker>()
-    .HasMany(m => m.Contacts)
-    .WithOne(c => c.MatchMaker)
-    .HasForeignKey(c => c.MatchMakerId);
+           modelBuilder.Entity<MatchMaker>()
+            .HasMany(m => m.Contacts)
+            .WithOne(c => c.MatchMaker)
+            .HasForeignKey(c => c.MatchMakerId);
 
-            modelBuilder.Entity<MatchMaker>()
+           modelBuilder.Entity<MatchMaker>()
                 .HasMany(m => m.Matches)
                 .WithOne(mm => mm.MatchMaker)
                 .HasForeignKey(mm => mm.MatchMakerId);

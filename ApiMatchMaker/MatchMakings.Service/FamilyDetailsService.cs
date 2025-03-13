@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace MatchMakings.Service
 {
-    class FamilyDetailsService : IFamilyDetailsService
+    public class FamilyDetailsService : IFamilyDetailsService
     {
         readonly private IFamilyDetailsRepository _FamilyDetailsRepository;
 
