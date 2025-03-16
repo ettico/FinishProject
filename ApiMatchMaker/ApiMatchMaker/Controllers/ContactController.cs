@@ -1,5 +1,6 @@
 ﻿using MatchMakings.Core.IServices;
 using MatchMakings.Core.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -10,6 +11,19 @@ namespace ApiMatchMaker.Controllers
     [ApiController]
     public class ContactController : ControllerBase
     {
+
+        [Authorize] // חייבים להיות מחוברים כדי לגשת
+        public IActionResult GetAllMatches()
+        {
+            return Ok(new { message = "רק משתמש מחובר יכול לראות את זה!" });
+        }
+
+        [HttpGet("admin")]
+        [Authorize(Roles = "Admin")] // רק Admin יכול לגשת
+        public IActionResult GetAdminData()
+        {
+            return Ok(new { message = "רק אדמין רואה את זה!" });
+        }
         private readonly IContactService _contactService;
         //private readonly IMapper _mapper;
         public ContactController(IContactService contactService)/*, IMapper mapper*/
