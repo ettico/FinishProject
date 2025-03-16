@@ -1,17 +1,27 @@
 ﻿using MatchMakings.Core.IServices;
 using MatchMakings.Core.Models;
+using MatchMakings.Data;
+using Microsoft.AspNetCore.Authorization;
+
 //using MatchMakings.Service;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using System.Security.Claims;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace ApiMatchMaker.Controllers
-{
+{ 
+    //[Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class FamilyDetailsController : ControllerBase
     {
+       
+       
         private readonly IFamilyDetailsService _familyDetailsService;
+        //private DataContext _context;
+
         //private readonly IMapper _mapper;
         public FamilyDetailsController(IFamilyDetailsService familyDetailsService)/*, IMapper mapper*/
         {

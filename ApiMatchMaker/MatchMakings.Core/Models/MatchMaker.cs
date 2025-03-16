@@ -7,8 +7,15 @@ using System.Threading.Tasks;
 
 namespace MatchMakings.Core.Models
 {
-    public class MatchMaker
+    public class MatchMaker:BaseUser
     {
+        public MatchMaker(string FName, string LName, string Username, string Password, string Role) : base(FName, LName, Username, Password, Role)
+        {
+        }
+        public MatchMaker()
+        {
+            
+        }
         public int? Id { get; set; }
         public string? FirstName { get; set; } // שם פרטי 
         public string? LastName { get; set; } // שם משפחה 

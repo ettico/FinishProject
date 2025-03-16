@@ -1,44 +1,56 @@
 ﻿using MatchMakings.Core.IServices;
 using MatchMakings.Core.Models;
+using MatchMakings.Data;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using System.Security.Claims;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace ApiMatchMaker.Controllers
 {
+    [Authorize(Roles = "Women")]
     [Route("api/[controller]")]
     [ApiController]
     public class ContactController : ControllerBase
     {
-
-        [Authorize] // חייבים להיות מחוברים כדי לגשת
-        public IActionResult GetAllMatches()
-        {
-            return Ok(new { message = "רק משתמש מחובר יכול לראות את זה!" });
-        }
-
-        [HttpGet("admin")]
-        [Authorize(Roles = "Admin")] // רק Admin יכול לגשת
-        public IActionResult GetAdminData()
-        {
-            return Ok(new { message = "רק אדמין רואה את זה!" });
-        }
+        
         private readonly IContactService _contactService;
+        //private DataContext _context;
+
         //private readonly IMapper _mapper;
         public ContactController(IContactService contactService)/*, IMapper mapper*/
         {
             _contactService = contactService;
             //_mapper = mapper;
         }
-        // GET: api/<CustomerController>
+
         [HttpGet]
-        public async Task<ActionResult> Get()
+        public IActionResult GetContacts()
         {
-            var list = await _contactService.GetListOfContactAsync();
-            //var custDTO = _mapper.Map<IEnumerable<CustomerDTO>>(list);
-            return Ok(list);
+            var identity = HttpContext.User.Identity as ClaimsIdentity;
+            if (identity == null) return Unauthorized("❌ אין זהות בבקשה!");
+
+            var claims = identity.Claims;
+            var userId = claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
+            var role = claims.FirstOrDefault(c => c.Type == ClaimTypes.Role)?.Value;
+
+            Console.WriteLine($"🆔 User ID from Token: {userId}");
+            Console.WriteLine($"🎭 Role from Token: {role}");
+
+            return Ok($"✅ משתמש מחובר עם ID: {userId} ותפקיד: {role}");
         }
+
+
+        // GET: api/<CustomerController>
+        //[HttpGet]
+        //public async Task<ActionResult> Get()
+        //{
+        //    var list = await _contactService.GetListOfContactAsync();
+        //    //var custDTO = _mapper.Map<IEnumerable<CustomerDTO>>(list);
+        //    return Ok(list);
+        //}
 
         // GET api/<CustomerController>/5
         [HttpGet("{id}")]

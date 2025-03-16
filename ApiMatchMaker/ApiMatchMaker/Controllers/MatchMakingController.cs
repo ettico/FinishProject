@@ -1,16 +1,24 @@
 ﻿using MatchMakings.Core.IServices;
 using MatchMakings.Core.Models;
+using MatchMakings.Data;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using System.Security.Claims;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace ApiProject.Controllers
 {
+        [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class MatchMakingController : ControllerBase
     {
+       
         private readonly IMatchMakingService _matchMakingService;
+        //private DataContext _context;
+
         //private readonly IMapper _mapper;
         public MatchMakingController(IMatchMakingService matchMakingService)/*, IMapper mapper*/
         {

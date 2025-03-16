@@ -108,6 +108,8 @@ namespace MatchMakings.Data
         public DbSet<MatchMaker> MatchMakers { get; set; }
         public DbSet<MatchMaking> MatchMakings { get; set; }
         public DbSet<Meeting> Meetings { get; set; }
+        public DbSet<BaseUser> Users { get; set; }
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseSqlServer("Server=(localdb)\\MSSQLLocalDB;Database=DB-Of-MatchMakings");

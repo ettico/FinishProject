@@ -6,8 +6,15 @@ using System.Threading.Tasks;
 
 namespace MatchMakings.Core.Models
 {
-    public  class Women
+    public  class Women:BaseUser
     {
+        public Women(string FName, string LName, string Username, string Password, string Role) : base(FName, LName, Username, Password, Role)
+        {
+        }
+        public Women()
+        {
+                
+        }
         public int Id { get; set; }
         public string? FirstName { get; set; }
         public string? LastName { get; set; }

@@ -1,8 +1,9 @@
-using MatchMakings.Core.IRepositories;
+﻿using MatchMakings.Core.IRepositories;
 using MatchMakings.Core.IServices;
 using MatchMakings.Data;
 using MatchMakings.Data.Repository;
 using MatchMakings.Service;
+using MatchMakings.Service.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
@@ -40,27 +41,36 @@ builder.Services.AddScoped<IMatchMakingService, MatchMakingService>();
 builder.Services.AddScoped<IWomenRepository, WomenRepository>();
 builder.Services.AddScoped<IWomenService, WomenService>();
 
+builder.Services.AddScoped<IAuthService, AuthService>();
+
 builder.Services.AddDbContext<DataContext>();
 
-//builder.Services.AddAuthentication(options =>
-//{
-//    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-//    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-//})
-//    .AddJwtBearer(options =>
-//    {
-//        options.TokenValidationParameters = new TokenValidationParameters
-//        {
-//            ValidateIssuer = true,
-//            ValidateAudience = true,
-//            ValidateLifetime = true,
-//            ValidateIssuerSigningKey = true,
-//            ValidIssuer = builder.Configuration["JWT:Issuer"],
-//            ValidAudience = builder.Configuration["JWT:Audience"],
-//            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["JWT:Key"]))
-//        };
-//    });
 builder.Services.AddScoped<JwtService>();
+
+
+builder.Services.AddCors(opt => opt.AddPolicy("MyPolicy", policy =>
+{
+    policy.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod();
+}));
+
+builder.Services.AddAuthorization();
+// 🔑 הוספת Authentication & Authorization
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddJwtBearer(options =>
+    {
+        options.RequireHttpsMetadata = false; // מאפשר גם ב-HTTP
+        options.SaveToken = true;
+        options.TokenValidationParameters = new TokenValidationParameters
+        {
+            ValidateIssuer = true,
+            ValidateAudience = true,
+            ValidateLifetime = true,
+            ValidateIssuerSigningKey = true,
+            ValidIssuer = builder.Configuration["Jwt:Issuer"],
+            ValidAudience = builder.Configuration["Jwt:Audience"],
+            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]))
+        };
+    });
 
 builder.Services.AddSwaggerGen(options =>
 {
@@ -88,8 +98,12 @@ builder.Services.AddSwaggerGen(options =>
         }
     });
 });
+Console.WriteLine("🔑 JWT Key: " + builder.Configuration["Jwt:Key"]);
+Console.WriteLine("🔑 JWT Issuer: " + builder.Configuration["Jwt:Issuer"]);
+Console.WriteLine("🔑 JWT Audience: " + builder.Configuration["Jwt:Audience"]);
 
 var app = builder.Build();
+
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
@@ -99,6 +113,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
 
 app.UseAuthentication();
 
