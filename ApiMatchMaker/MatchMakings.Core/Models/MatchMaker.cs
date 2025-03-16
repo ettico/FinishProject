@@ -35,7 +35,7 @@ namespace MatchMakings.Core.Models
         public int? YearsInShidduchim { get; set; } // כמה זמן עוסק בשידוכים
         public bool? IsInternalMatchmaker { get; set; } // האם אתה שדכן פנימי
         public string? PrintingNotes { get; set; } // הערות להדפסה באלפון כמו שעות מענה וכו'
-        public List<Contact>? Contacts { get; set; } // ממליצים לבירורים
+        public List<Contact>? Recommend { get; set; } // ממליצים לבירורים
         public List<MatchMaking>? Matches { get; set; }
 
     }

@@ -19,7 +19,7 @@ namespace MatchMakings.Data.Repository
         }
         public async Task<IEnumerable<Women>> GetListOfWomenAsync()
         {
-            return await _dataContext.Womens.Include(u => u.Id).ToListAsync();//todo
+            return await _dataContext.Womens.Include(u => u.FamilyDetails).ToListAsync();//todo
         }
 
         public async Task<Women> GetWomenByIdAsync(int id)

@@ -1,6 +1,6 @@
 ﻿using MatchMakings.Core.IServices;
 using MatchMakings.Core.Models;
-using MatchMakings.Service;
+//using MatchMakings.Service;
 using Microsoft.AspNetCore.Mvc;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -15,6 +15,10 @@ namespace ApiMatchMaker.Controllers
         //private readonly IMapper _mapper;
         public FamilyDetailsController(IFamilyDetailsService familyDetailsService)/*, IMapper mapper*/
         {
+            if (familyDetailsService == null)
+            {
+                throw new ArgumentNullException(nameof(familyDetailsService));
+            }
             _familyDetailsService = familyDetailsService;
             //_mapper = mapper;
         }

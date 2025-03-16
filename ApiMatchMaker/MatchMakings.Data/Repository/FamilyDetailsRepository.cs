@@ -6,6 +6,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+//using static System.Net.Mime.MediaTypeNames;
+
 
 namespace MatchMakings.Data.Repository
 {
@@ -19,7 +21,7 @@ namespace MatchMakings.Data.Repository
         }
         public async Task<IEnumerable<FamilyDetails>> GetListOfFamilyDetailsAsync()
         {
-            return await _dataContext.FamilyDetails.Include(u => u.WomenId).ToListAsync();//todo
+            return await _dataContext.FamilyDetails.Include(u => u.Women).ToListAsync();//todo
         }
 
         public async Task<FamilyDetails> GetFamilyDetailsByIdAsync(int id)
@@ -50,14 +52,14 @@ namespace MatchMakings.Data.Repository
         }
         public async Task<FamilyDetails> DeleteFamilyDetailsAsync(int id)
         {
-            var FamilyDetails = await _dataContext.FamilyDetails.FirstOrDefaultAsync(x => x.Id == id);
-            if (FamilyDetails == null)
+            var familyDetails = await _dataContext.FamilyDetails.FirstOrDefaultAsync(x => x.Id == id);
+            if (familyDetails == null)
             {
                 throw new ArgumentException($"FamilyDetails with id {id} was not found.");
             }
-            _dataContext.FamilyDetails.Remove(FamilyDetails);
+            _dataContext.FamilyDetails.Remove(familyDetails);
             await _dataContext.SaveChangesAsync();
-            return FamilyDetails;
+            return familyDetails;
         }
     }
 }

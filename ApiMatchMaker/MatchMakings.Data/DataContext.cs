@@ -110,66 +110,101 @@ namespace MatchMakings.Data
         public DbSet<Meeting> Meetings { get; set; }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer("Server=(localdb)\\MSSQLLocalDB;Database=MatchMakingsToDB");
+            optionsBuilder.UseSqlServer("Server=(localdb)\\MSSQLLocalDB;Database=DB-Of-MatchMakings");
         }
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
-            modelBuilder.Entity<Contact>()
-               .HasOne(c => c.Male)
-               .WithMany(m => m.Acquaintances)
-               .HasForeignKey(c => c.MaleId);
+        //protected override void OnModelCreating(ModelBuilder modelBuilder)
+        //{
+        //    // קשרים עבור Contact
+        //    modelBuilder.Entity<Contact>()
+        //       .HasOne(c => c.Male)
+        //       .WithMany(m => m.Acquaintances)
+        //       .HasForeignKey(c => c.MaleId)
+        //       .OnDelete(DeleteBehavior.Restrict);
 
-            modelBuilder.Entity<Contact>()
-                .HasOne(c => c.Women)
-                .WithMany(w => w.Contacts)
-                .HasForeignKey(c => c.WomenId);
+        //    modelBuilder.Entity<Contact>()
+        //       .HasOne(c => c.Women)
+        //       .WithMany(w => w.Contacts)
+        //       .HasForeignKey(c => c.WomenId)
+        //       .OnDelete(DeleteBehavior.Restrict);
 
-            modelBuilder.Entity<Contact>()
-                .HasOne(c => c.MatchMaker)
-                .WithMany(m => m.Contacts)
-                .HasForeignKey(c => c.MatchMakerId);
+        //    modelBuilder.Entity<Contact>()
+        //       .HasOne(c => c.MatchMaker)
+        //       .WithMany(m => m.Contacts)
+        //       .HasForeignKey(c => c.MatchMakerId)
+        //       .OnDelete(DeleteBehavior.Restrict);
 
-            modelBuilder.Entity<FamilyDetails>()
-             .HasOne(fd => fd.Male)
-             .WithOne(m => m.FamilyDetails)
-             .HasForeignKey<FamilyDetails>(fd => fd.MaleId);
+        //    // קשרים עבור FamilyDetails
+        //    modelBuilder.Entity<FamilyDetails>()
+        //       .HasOne(fd => fd.Male)
+        //       .WithOne(m => m.FamilyDetails)
+        //       .HasForeignKey<FamilyDetails>(fd => fd.MaleId)
+        //       .OnDelete(DeleteBehavior.Cascade);
 
-            modelBuilder.Entity<FamilyDetails>()
-                .HasOne(fd => fd.Women)
-                .WithOne(w => w.FamilyDetails)
-                .HasForeignKey<FamilyDetails>(fd => fd.WomenId);
+        //    modelBuilder.Entity<FamilyDetails>()
+        //       .HasOne(fd => fd.Women)
+        //       .WithOne(w => w.FamilyDetails)
+        //       .HasForeignKey<FamilyDetails>(fd => fd.WomenId)
+        //       .OnDelete(DeleteBehavior.Cascade);
 
-            modelBuilder.Entity<MatchMaking>()
-            .HasOne(mm => mm.male) // קשר עם Male
-            .WithMany() // קשר אחד לרבים
-            .HasForeignKey(mm => mm.MaleId);
+        //    // קשרים עבור MatchMaking
+        //    modelBuilder.Entity<MatchMaking>()
+        //       .HasOne(mm => mm.male)
+        //       .WithMany()
+        //       .HasForeignKey(mm => mm.MaleId)
+        //       .OnDelete(DeleteBehavior.Restrict);
 
-            modelBuilder.Entity<MatchMaking>()
-                .HasOne(mm => mm.women) // קשר עם Women
-                .WithMany() // קשר אחד לרבים
-                .HasForeignKey(mm => mm.WomenId);
+        //    modelBuilder.Entity<MatchMaking>()
+        //       .HasOne(mm => mm.women)
+        //       .WithMany()
+        //       .HasForeignKey(mm => mm.WomenId)
+        //       .OnDelete(DeleteBehavior.Restrict);
 
-            modelBuilder.Entity<MatchMaking>()
-                .HasOne(mm => mm.MatchMaker)
-                .WithMany(m => m.Matches)
-                .HasForeignKey(mm => mm.MatchMakerId);
+        //    modelBuilder.Entity<MatchMaking>()
+        //       .HasOne(mm => mm.MatchMaker)
+        //       .WithMany(m => m.Matches)
+        //       .HasForeignKey(mm => mm.MatchMakerId)
+        //       .OnDelete(DeleteBehavior.Cascade);
 
-            modelBuilder.Entity<Meeting>()
-            .HasOne(m => m.MatchMaking)
-            .WithMany(mm => mm.Meetings)
-            .HasForeignKey(m => m.MatchMakingId);
+        //    // קשרים עבור Meeting
+        //    modelBuilder.Entity<Meeting>()
+        //       .HasOne(m => m.MatchMaking)
+        //       .WithMany(mm => mm.Meetings)
+        //       .HasForeignKey(m => m.MatchMakingId)
+        //       .OnDelete(DeleteBehavior.Cascade);
 
-           modelBuilder.Entity<MatchMaker>()
-            .HasMany(m => m.Contacts)
-            .WithOne(c => c.MatchMaker)
-            .HasForeignKey(c => c.MatchMakerId);
+        //    // קשרים עבור MatchMaker
+        //    modelBuilder.Entity<MatchMaker>()
+        //       .HasMany(m => m.Contacts)
+        //       .WithOne(c => c.MatchMaker)
+        //       .HasForeignKey(c => c.MatchMakerId)
+        //       .OnDelete(DeleteBehavior.Restrict);
 
-           modelBuilder.Entity<MatchMaker>()
-                .HasMany(m => m.Matches)
-                .WithOne(mm => mm.MatchMaker)
-                .HasForeignKey(mm => mm.MatchMakerId);
+        //    modelBuilder.Entity<MatchMaker>()
+        //       .HasMany(m => m.Matches)
+        //       .WithOne(mm => mm.MatchMaker)
+        //       .HasForeignKey(mm => mm.MatchMakerId)
+        //       .OnDelete(DeleteBehavior.Cascade);
+        //}
+        //protected override void OnModelCreating(ModelBuilder modelBuilder)
+        //{
+        //    modelBuilder.Entity<MatchMaking>()
+        //        .HasOne(mm => mm.male)
+        //        .WithMany()
+        //        .HasForeignKey(mm => mm.MaleId)
+        //        .OnDelete(DeleteBehavior.Cascade);
 
-        }
+        //    modelBuilder.Entity<MatchMaking>()
+        //        .HasOne(mm => mm.women)
+        //        .WithMany()
+        //        .HasForeignKey(mm => mm.WomenId)
+        //        .OnDelete(DeleteBehavior.Cascade);
+
+        //    modelBuilder.Entity<MatchMaking>()
+        //        .HasOne(mm => mm.MatchMaker)
+        //        .WithMany(m => m.Matches)
+        //        .HasForeignKey(mm => mm.MatchMakerId)
+        //        .OnDelete(DeleteBehavior.Cascade);
+        //}
 
 
 

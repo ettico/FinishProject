@@ -20,7 +20,7 @@ namespace MatchMakings.Data.Repository
         }
         public async Task<IEnumerable<MatchMaker>> GetListOfMatchMakerAsync()
         {
-            return await _dataContext.MatchMakers.Include(u => u.Id).ToListAsync();//todo
+            return await _dataContext.MatchMakers.Include(u => u.Recommend).ToListAsync();//todo
         }
 
         public async Task<MatchMaker> GetMatchMakerByIdAsync(int id)

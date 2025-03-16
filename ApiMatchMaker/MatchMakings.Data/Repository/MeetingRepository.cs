@@ -19,7 +19,7 @@ namespace MatchMakings.Data.Repository
         }
         public async Task<IEnumerable<Meeting>> GetListOfMeetingAsync()
         {
-            return await _dataContext.Meetings.Include(u => u.Id).ToListAsync();//todo
+            return await _dataContext.Meetings.Include(u => u.MatchMaking).ToListAsync();//todo
         }
 
         public async Task<Meeting> GetMeetingByIdAsync(int id)

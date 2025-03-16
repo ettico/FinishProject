@@ -8,7 +8,7 @@ namespace MatchMakings.Core.Models
 {
     public  class Women
     {
-        public int? Id { get; set; }
+        public int Id { get; set; }
         public string? FirstName { get; set; }
         public string? LastName { get; set; }
         public string? Country { get; set; }
@@ -97,6 +97,7 @@ namespace MatchMakings.Core.Models
         public string   ? Occupation { get; set; }
 
 
-        public MatchMaking? matchMaking { get; set; }
+        public List<MatchMaking>? Matchings { get; set; }
+
     }
 }
