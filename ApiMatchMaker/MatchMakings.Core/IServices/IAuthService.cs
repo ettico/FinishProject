@@ -13,6 +13,7 @@ namespace MatchMakings.Core.IServices
         string GenerateToken(BaseUser user);
         Task<BaseUser> AuthenticateUser(LoginDTO loginDto);
         Task<BaseUser> RegisterUser(RegisterDTO registerDto);
-
+        Task<BaseUser> GetUserById(int id);
+        Task DeleteUser(int id);
    }
 }

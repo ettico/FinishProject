@@ -47,13 +47,17 @@ builder.Services.AddDbContext<DataContext>();
 
 builder.Services.AddScoped<JwtService>();
 
-
-builder.Services.AddCors(opt => opt.AddPolicy("MyPolicy", policy =>
-{
-    policy.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod();
-}));
-
 builder.Services.AddAuthorization();
+
+// הוספת מדיניות הרשאות לפי תפקידים
+builder.Services.AddAuthorization(options =>
+{
+    options.AddPolicy("AdminOnly", policy => policy.RequireRole("Admin"));
+    options.AddPolicy("MatchMakerOnly", policy => policy.RequireRole("MatchMaker"));
+    options.AddPolicy("CandidateOnly", policy => policy.RequireRole("Women", "Male"));
+});
+
+
 // 🔑 הוספת Authentication & Authorization
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
@@ -70,7 +74,21 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             ValidAudience = builder.Configuration["Jwt:Audience"],
             IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]))
         };
+        options.Events = new JwtBearerEvents
+        {
+            OnAuthenticationFailed = context =>
+            {
+                Console.WriteLine($"❌ Authentication failed: {context.Exception.Message}");
+                return Task.CompletedTask;
+            },
+            OnTokenValidated = context =>
+            {
+                Console.WriteLine("✅ Token validated successfully!");
+                return Task.CompletedTask;
+            }
+        };
     });
+Console.WriteLine("🔑 JWT Key: " + builder.Configuration["Jwt:Key"]);
 
 builder.Services.AddSwaggerGen(options =>
 {
@@ -97,10 +115,13 @@ builder.Services.AddSwaggerGen(options =>
             new List<string>()
         }
     });
+    
+
 });
 Console.WriteLine("🔑 JWT Key: " + builder.Configuration["Jwt:Key"]);
 Console.WriteLine("🔑 JWT Issuer: " + builder.Configuration["Jwt:Issuer"]);
 Console.WriteLine("🔑 JWT Audience: " + builder.Configuration["Jwt:Audience"]);
+
 
 var app = builder.Build();
 
@@ -122,3 +143,4 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.Run();
+Console.WriteLine("🔑bbb JWT Key: " + builder.Configuration["Jwt:Key"]);

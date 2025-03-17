@@ -10,7 +10,7 @@ using System.Security.Claims;
 
 namespace ApiMatchMaker.Controllers
 {
-    [Authorize(Roles = "Women")]
+    [Authorize(Policy = "AdminOnly")]
     [Route("api/[controller]")]
     [ApiController]
     public class ContactController : ControllerBase
