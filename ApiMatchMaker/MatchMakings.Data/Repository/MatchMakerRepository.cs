@@ -20,12 +20,12 @@ namespace MatchMakings.Data.Repository
         }
         public async Task<IEnumerable<MatchMaker>> GetListOfMatchMakerAsync()
         {
-            return await _dataContext.MatchMakers.Include(u => u.Recommend).ToListAsync();//todo
+            return await _dataContext.Users.OfType<MatchMaker>().Include(u => u.Recommend).ToListAsync();//todo
         }
 
         public async Task<MatchMaker> GetMatchMakerByIdAsync(int id)
         {
-            var MatchMaker = await _dataContext.MatchMakers.FirstOrDefaultAsync(x => x.Id == id);
+            var MatchMaker = await _dataContext.Users.OfType<MatchMaker>().FirstOrDefaultAsync(x => x.Id == id);
             if (MatchMaker == null)
             {
                 throw new ArgumentException($"MatchMaker with id {id} was not found.");
@@ -35,7 +35,7 @@ namespace MatchMakings.Data.Repository
 
         public async Task<MatchMaker> AddMatchMakerAsync(MatchMaker MatchMaker)
         {
-            _dataContext.MatchMakers.Add(MatchMaker);
+            _dataContext.Users.Add(MatchMaker);
             await _dataContext.SaveChangesAsync();
             return MatchMaker;
         }
@@ -51,12 +51,12 @@ namespace MatchMakings.Data.Repository
         }
         public async Task<MatchMaker> DeleteMatchMakerAsync(int id)
         {
-            var MatchMaker = await _dataContext.MatchMakers.FirstOrDefaultAsync(x => x.Id == id);
+            var MatchMaker = await _dataContext.Users.OfType<MatchMaker>().FirstOrDefaultAsync(x => x.Id == id);
             if (MatchMaker == null)
             {
                 throw new ArgumentException($"MatchMaker with id {id} was not found.");
             }
-            _dataContext.MatchMakers.Remove(MatchMaker);
+            _dataContext.Users.Remove(MatchMaker);
             await _dataContext.SaveChangesAsync();
             return MatchMaker;
         }

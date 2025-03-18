@@ -6,10 +6,12 @@ using MatchMakings.Service;
 using MatchMakings.Service.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.IdentityModel.Logging;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System.Text;
-
+using Microsoft.IdentityModel.Logging;
+IdentityModelEventSource.ShowPII = true;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -73,12 +75,17 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             ValidIssuer = builder.Configuration["Jwt:Issuer"],
             ValidAudience = builder.Configuration["Jwt:Audience"],
             IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]))
+          
         };
+        Console.WriteLine("-----------"+ builder.Configuration["Jwt:Issuer"]);
+        Console.WriteLine("-----------"+ builder.Configuration["Jwt:Audience"]);
+        Console.WriteLine("-----------"+ builder.Configuration["Jwt:Key"]);
         options.Events = new JwtBearerEvents
         {
             OnAuthenticationFailed = context =>
             {
                 Console.WriteLine($"❌ Authentication failed: {context.Exception.Message}");
+                 Console.WriteLine($"Token: {context.Request.Headers["Authorization"]}");
                 return Task.CompletedTask;
             },
             OnTokenValidated = context =>
@@ -121,10 +128,9 @@ builder.Services.AddSwaggerGen(options =>
 Console.WriteLine("🔑 JWT Key: " + builder.Configuration["Jwt:Key"]);
 Console.WriteLine("🔑 JWT Issuer: " + builder.Configuration["Jwt:Issuer"]);
 Console.WriteLine("🔑 JWT Audience: " + builder.Configuration["Jwt:Audience"]);
-
+IdentityModelEventSource.ShowPII = true;
 
 var app = builder.Build();
-
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
@@ -135,12 +141,12 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+app.UseRouting();  // הוספת UseRouting אחרי ה-UseHttpsRedirection
 
-app.UseAuthentication();
-
-app.UseAuthorization();
+app.UseAuthentication();  // השתמש בזה אחרי ה-UseRouting
+app.UseAuthorization();   // השתמש בזה אחרי ה-UseAuthentication
 
 app.MapControllers();
 
 app.Run();
-Console.WriteLine("🔑bbb JWT Key: " + builder.Configuration["Jwt:Key"]);
+//Console.WriteLine("🔑bbb JWT Key: " + builder.Configuration["Jwt:Key"]);

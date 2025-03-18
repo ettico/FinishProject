@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace MatchMakings.Data.Repository
 {
-    public class MaleRepository: IMaleRepository
+    public class MaleRepository : IMaleRepository
     {
         private readonly DataContext _dataContext;
 
@@ -19,12 +19,16 @@ namespace MatchMakings.Data.Repository
         }
         public async Task<IEnumerable<Male>> GetListOfMaleAsync()
         {
-            return await _dataContext.Males.Include(u => u.FamilyDetails).ToListAsync();//todo
+            return await _dataContext.Users
+            .OfType<Male>() // מחזיר רק משתמשים מהסוג Man
+            .Include(u => u.FamilyDetails)
+            .ToListAsync();
+
         }
 
         public async Task<Male> GetMaleByIdAsync(int id)
         {
-            var Male = await _dataContext.Males.FirstOrDefaultAsync(x => x.Id == id);
+            var Male = await _dataContext.Users.OfType<Male>().FirstOrDefaultAsync(x => x.Id == id);
             if (Male == null)
             {
                 throw new ArgumentException($"Male with id {id} was not found.");
@@ -34,7 +38,7 @@ namespace MatchMakings.Data.Repository
 
         public async Task<Male> AddMaleAsync(Male Male)
         {
-            _dataContext.Males.Add(Male);
+            _dataContext.Users.Add(Male);
             await _dataContext.SaveChangesAsync();
             return Male;
         }
@@ -50,12 +54,12 @@ namespace MatchMakings.Data.Repository
         }
         public async Task<Male> DeleteMaleAsync(int id)
         {
-            var Male = await _dataContext.Males.FirstOrDefaultAsync(x => x.Id == id);
+            var Male = await _dataContext.Users.OfType<Male>().FirstOrDefaultAsync(x => x.Id == id);
             if (Male == null)
             {
                 throw new ArgumentException($"Male with id {id} was not found.");
             }
-            _dataContext.Males.Remove(Male);
+            _dataContext.Users.Remove(Male);
             await _dataContext.SaveChangesAsync();
             return Male;
         }

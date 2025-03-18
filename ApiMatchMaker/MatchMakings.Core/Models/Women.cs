@@ -15,9 +15,9 @@ namespace MatchMakings.Core.Models
         {
                 
         }
-        public int Id { get; set; }
-        public string? FirstName { get; set; }
-        public string? LastName { get; set; }
+        //public int Id { get; set; }
+        //public string? FirstName { get; set; }
+        //public string? LastName { get; set; }
         public string? Country { get; set; }
         public string? City { get; set; }
         public string? Address { get; set; }
@@ -26,7 +26,7 @@ namespace MatchMakings.Core.Models
         public bool? AnOutsider { get; set; } = false;//חוצניק -מאותחל אוטומטית ב false
         public string? BackGround { get; set; }    //רקע-לדוג חוזרים בתשובה חרדים וכדו
         public string? Openness { get; set; }
-        public string? Gender { get; set; } //מגדר-בחור או בחורה   
+        //public string? Gender { get; set; } //מגדר-בחור או בחורה   
         public DateTime? BurnDate { get; set; }
         public int? Age { get; set; }
         public bool ? HealthCondition { get; set; }//מצב בריאותי-1-תקין/0-לא תקין

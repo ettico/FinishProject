@@ -16,9 +16,9 @@ namespace MatchMakings.Core.Models
         {
             
         }
-        public int? Id { get; set; }
-        public string? FirstName { get; set; } // שם פרטי 
-        public string? LastName { get; set; } // שם משפחה 
+        //public int? Id { get; set; }
+        //public string? FirstName { get; set; } // שם פרטי 
+        //public string? LastName { get; set; } // שם משפחה 
         public string? MatchmakerName { get; set; } // שם שדכן
         public string? IdNumber { get; set; } // תעודת זהות
         public DateTime? BirthDate { get; set; } // תאריך לידה

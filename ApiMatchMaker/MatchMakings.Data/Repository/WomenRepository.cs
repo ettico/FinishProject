@@ -19,12 +19,12 @@ namespace MatchMakings.Data.Repository
         }
         public async Task<IEnumerable<Women>> GetListOfWomenAsync()
         {
-            return await _dataContext.Womens.Include(u => u.FamilyDetails).ToListAsync();//todo
+            return await _dataContext.Users.OfType<Women>().Include(u => u.FamilyDetails).ToListAsync();//todo
         }
 
         public async Task<Women> GetWomenByIdAsync(int id)
         {
-            var Women = await _dataContext.Womens.FirstOrDefaultAsync(x => x.Id == id);
+            var Women = await _dataContext.Users.OfType<Women>().FirstOrDefaultAsync(x => x.Id == id);
             if (Women == null)
             {
                 throw new ArgumentException($"Women with id {id} was not found.");
@@ -34,7 +34,7 @@ namespace MatchMakings.Data.Repository
 
         public async Task<Women> AddWomenAsync(Women Women)
         {
-            _dataContext.Womens.Add(Women);
+            _dataContext.Users.Add(Women);
             await _dataContext.SaveChangesAsync();
             return Women;
         }
@@ -50,12 +50,12 @@ namespace MatchMakings.Data.Repository
         }
         public async Task<Women> DeleteWomenAsync(int id)
         {
-            var Women = await _dataContext.Womens.FirstOrDefaultAsync(x => x.Id == id);
+            var Women = await _dataContext.Users.OfType<Women>().FirstOrDefaultAsync(x => x.Id == id);
             if (Women == null)
             {
                 throw new ArgumentException($"Contact with id {id} was not found.");
             }
-            _dataContext.Womens.Remove(Women);
+            _dataContext.Users.Remove(Women);
             await _dataContext.SaveChangesAsync();
             return Women;
         }

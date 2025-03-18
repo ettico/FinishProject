@@ -22,25 +22,29 @@ namespace MatchMakings.Service.Services
             _config = config;
         }
 
+        //public async Task<BaseUser> AuthenticateUser(LoginDTO loginDto)
+        //{
+        //    //// 🔥 בדיקה אם המשתמש הוא המנהל עם פרטים קבועים
+        //    //if (loginDto.Username == "etti0475@gmail.com" && loginDto.Password == "Admin123!")
+        //    //{
+        //    //    return new BaseUser
+        //    //    {
+        //    //        Id = 999, // מספר מזהה קבוע למנהל
+        //    //        Username = "etti0475@gmail.com",
+        //    //        Password = "Admin123!",
+        //    //        Role = "Admin"
+        //    //    };
+        //    //}
+
+        //    // חיפוש משתמש רגיל במסד הנתונים
+        //    return await _context.Users
+        //        .FirstOrDefaultAsync(u => u.Username == loginDto.Username && u.Password == loginDto.Password);
+        //}
         public async Task<BaseUser> AuthenticateUser(LoginDTO loginDto)
         {
-            //// 🔥 בדיקה אם המשתמש הוא המנהל עם פרטים קבועים
-            //if (loginDto.Username == "etti0475@gmail.com" && loginDto.Password == "Admin123!")
-            //{
-            //    return new BaseUser
-            //    {
-            //        Id = 999, // מספר מזהה קבוע למנהל
-            //        Username = "etti0475@gmail.com",
-            //        Password = "Admin123!",
-            //        Role = "Admin"
-            //    };
-            //}
-
-            // חיפוש משתמש רגיל במסד הנתונים
             return await _context.Users
                 .FirstOrDefaultAsync(u => u.Username == loginDto.Username && u.Password == loginDto.Password);
         }
-
 
         public async Task<BaseUser> RegisterUser(RegisterDTO registerDto)
         {
@@ -53,8 +57,48 @@ namespace MatchMakings.Service.Services
                 throw new InvalidOperationException("⚠ המשתמש כבר קיים במערכת!");
             }
 
-            var user = new BaseUser(registerDto.FirstName, registerDto.LastName,
-               registerDto.Username, registerDto.Password, registerDto.Role);
+            BaseUser user;
+
+            // 📌 יצירת מופע מתאים לפי התפקיד
+            switch (registerDto.Role.ToLower())
+            {
+                case "matchmaker":
+                    user = new MatchMaker
+                    {
+                        FirstName = registerDto.FirstName,
+                        LastName = registerDto.LastName,
+                        Username = registerDto.Username,
+                        Password = registerDto.Password,
+                        Role = "MatchMaker",
+                        //NumberOfClients = 0  // נניח שמתחיל עם 0 לקוחות
+                    };
+                    break;
+
+                case "male":
+                    user = new Male
+                    {
+                        FirstName = registerDto.FirstName,
+                        LastName = registerDto.LastName,
+                        Username = registerDto.Username,
+                        Password = registerDto.Password,
+                        Role = "Male"
+                    };
+                    break;
+
+                case "women":
+                    user = new Women
+                    {
+                        FirstName = registerDto.FirstName,
+                        LastName = registerDto.LastName,
+                        Username = registerDto.Username,
+                        Password = registerDto.Password,
+                        Role = "Women"
+                    };
+                    break;
+
+                default:
+                    throw new ArgumentException("⚠ סוג משתמש לא תקין!");
+            }
 
             _context.Users.Add(user);
             await _context.SaveChangesAsync();
@@ -74,6 +118,8 @@ namespace MatchMakings.Service.Services
             {
                 Console.WriteLine("token is null");
             }
+
+           
 
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Jwt:Key"]));
             var credentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);

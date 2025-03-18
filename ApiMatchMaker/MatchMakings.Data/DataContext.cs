@@ -101,11 +101,11 @@ namespace MatchMakings.Data
     //}
     public class DataContext : DbContext
     {
-        public DbSet<Male> Males { get; set; }
-        public DbSet<Women> Womens { get; set; }
+        //public DbSet<Male> Males { get; set; }
+        //public DbSet<Women> Womens { get; set; }
         public DbSet<Contact> Contacts { get; set; }
         public DbSet<FamilyDetails> FamilyDetails { get; set; }
-        public DbSet<MatchMaker> MatchMakers { get; set; }
+        //public DbSet<MatchMaker> MatchMakers { get; set; }
         public DbSet<MatchMaking> MatchMakings { get; set; }
         public DbSet<Meeting> Meetings { get; set; }
         public DbSet<BaseUser> Users { get; set; }
@@ -114,6 +114,16 @@ namespace MatchMakings.Data
         {
             optionsBuilder.UseSqlServer("Server=(localdb)\\MSSQLLocalDB;Database=DB-Of-MatchMakings");
         }
+      
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+              modelBuilder.Entity<BaseUser>()
+                  .HasDiscriminator<string>("UserType")
+                  .HasValue<MatchMaker>("Matchmaker")
+                  .HasValue<Women>("Woman")
+                  .HasValue<Male>("Man");
+        }
+        
         //protected override void OnModelCreating(ModelBuilder modelBuilder)
         //{
         //    // קשרים עבור Contact
